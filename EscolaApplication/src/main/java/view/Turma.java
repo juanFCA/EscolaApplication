@@ -5,17 +5,29 @@
  */
 package view;
 
+import controler.TurmaControler;
+import javassist.tools.rmi.RemoteException;
+import javax.swing.JOptionPane;
+import util.ValidacaoException;
+
 /**
  *
  * @author juan
  */
 public class Turma extends javax.swing.JInternalFrame {
 
+    private TurmaControler turmaControler;
+    
     /**
      * Creates new form Turma
      */
     public Turma() {
+        turmaControler = new TurmaControler();
         initComponents();
+    }
+
+    public TurmaControler getTurmaControler() {
+        return turmaControler;
     }
 
     /**
@@ -26,6 +38,7 @@ public class Turma extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         panelMenu = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
@@ -50,12 +63,32 @@ public class Turma extends javax.swing.JInternalFrame {
         panelMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnSalvar.setText("Salvar/Atualizar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         btnPesquisar.setLabel("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
@@ -97,11 +130,26 @@ public class Turma extends javax.swing.JInternalFrame {
 
         cboxEnsino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fundamental I", "Fundamental", "Médio" }));
 
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${turmaControler.turmaDigitada.ensino}"), cboxEnsino, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${turmaControler.turmaDigitada.ano}"), txtAno, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${turmaControler.turmaDigitada.nome}"), txtNome, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         jLabel5.setText("Total de Alunos:");
 
         txtID.setEditable(false);
 
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${turmaControler.turmaDigitada.id}"), txtID, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         txtTotAlunos.setEditable(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${turmaControler.turmaDigitada.totalAlunos}"), txtTotAlunos, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout panelDadosLayout = new javax.swing.GroupLayout(panelDados);
         panelDados.setLayout(panelDadosLayout);
@@ -157,14 +205,29 @@ public class Turma extends javax.swing.JInternalFrame {
 
         panelTabela.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        tabelaTurma.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        tabelaTurma.getTableHeader().setReorderingAllowed(false);
 
-            },
-            new String [] {
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${turmaControler.turmasTabelas}");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tabelaTurma);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
+        columnBinding.setColumnName("Id");
+        columnBinding.setColumnClass(Long.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nome}"));
+        columnBinding.setColumnName("Nome");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ano}"));
+        columnBinding.setColumnName("Ano");
+        columnBinding.setColumnClass(Long.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ensino}"));
+        columnBinding.setColumnName("Ensino");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalAlunos}"));
+        columnBinding.setColumnName("Total Alunos");
+        columnBinding.setColumnClass(Long.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${turmaControler.turmaSelecionada}"), tabelaTurma, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        bindingGroup.addBinding(binding);
 
-            }
-        ));
         scrollPanel.setViewportView(tabelaTurma);
 
         javax.swing.GroupLayout panelTabelaLayout = new javax.swing.GroupLayout(panelTabela);
@@ -196,8 +259,69 @@ public class Turma extends javax.swing.JInternalFrame {
                 .addComponent(panelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        // TODO add your handling code here:
+        turmaControler.novo();
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        // TODO add your handling code here:
+        try {
+            turmaControler.salvar();
+            JOptionPane.showMessageDialog(this, 
+                "Turma salva com sucesso",
+                "Salvar Turma",
+                JOptionPane.INFORMATION_MESSAGE);              
+        } catch(ValidacaoException e) {
+            JOptionPane.showMessageDialog(this, 
+                e.getMessage(),
+                "Falha de Validação",
+                JOptionPane.WARNING_MESSAGE);              
+        } catch(RemoteException e ){
+            JOptionPane.showMessageDialog(this,
+                    "Erro "+e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }  
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        // TODO add your handling code here:
+         if (JOptionPane.showConfirmDialog(this, 
+                "Deseja realmente excluir esta Turma?",
+                "Excluir Turma",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            try {
+                turmaControler.excluir();
+                JOptionPane.showMessageDialog(this, 
+                    "Turma excluída com sucessa",
+                    "Excluir Turma",
+                    JOptionPane.INFORMATION_MESSAGE);              
+            } catch(RemoteException e ){
+                JOptionPane.showMessageDialog(this,
+                    "Erro "+e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            }        
+        }
+    }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        // TODO add your handling code here:
+        try {
+            turmaControler.pesquisar();
+        } catch(RemoteException e ){
+            JOptionPane.showMessageDialog(this,
+                    "Erro "+e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }  
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -220,5 +344,6 @@ public class Turma extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtTotAlunos;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
