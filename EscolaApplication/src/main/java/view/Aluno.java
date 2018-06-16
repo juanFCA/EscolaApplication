@@ -26,7 +26,6 @@ public class Aluno extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         btGroupPCD = new javax.swing.ButtonGroup();
         panelMenu = new javax.swing.JPanel();
@@ -40,15 +39,15 @@ public class Aluno extends javax.swing.JInternalFrame {
         lblAno = new javax.swing.JLabel();
         txtAno = new javax.swing.JTextField();
         txtNome = new javax.swing.JTextField();
+        lblNomeTurma = new javax.swing.JLabel();
         txtMatricula = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
         lblPCD = new javax.swing.JLabel();
-        rdBtnSim = new javax.swing.JRadioButton();
-        rdBtnNao = new javax.swing.JRadioButton();
+        rdBtSim = new javax.swing.JRadioButton();
+        rdBtNao = new javax.swing.JRadioButton();
         panelTabela = new javax.swing.JPanel();
         scrollPanel = new javax.swing.JScrollPane();
         tabelaTurma = new javax.swing.JTable();
-
-        setPreferredSize(new java.awt.Dimension(427, 487));
 
         panelMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -89,28 +88,26 @@ public class Aluno extends javax.swing.JInternalFrame {
 
         panelDados.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        lblMatricula.setText("Matrícula:");
+        lblMatricula.setText("Matricula:");
 
         lblNome.setText("Nome:");
 
         lblAno.setText("Ano de Nascimento:");
 
+        lblNomeTurma.setText("Nome da Turma:");
+
         txtMatricula.setEditable(false);
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         lblPCD.setText("PCD:");
+        lblPCD.setToolTipText("");
 
-        btGroupPCD.add(rdBtnSim);
-        rdBtnSim.setText("Sim");
+        btGroupPCD.add(rdBtSim);
+        rdBtSim.setText("Sim");
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, btGroupPCD, org.jdesktop.beansbinding.ELProperty.create("${buttonCount}"), rdBtnSim, org.jdesktop.beansbinding.BeanProperty.create("selected"));
-        bindingGroup.addBinding(binding);
-
-        btGroupPCD.add(rdBtnNao);
-        rdBtnNao.setSelected(true);
-        rdBtnNao.setText("Não");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, btGroupPCD, org.jdesktop.beansbinding.ELProperty.create("${buttonCount}"), rdBtnNao, org.jdesktop.beansbinding.BeanProperty.create("selected"));
-        bindingGroup.addBinding(binding);
+        btGroupPCD.add(rdBtNao);
+        rdBtNao.setText("Não");
 
         javax.swing.GroupLayout panelDadosLayout = new javax.swing.GroupLayout(panelDados);
         panelDados.setLayout(panelDadosLayout);
@@ -120,10 +117,6 @@ public class Aluno extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(panelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDadosLayout.createSequentialGroup()
-                        .addComponent(lblNome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNome))
-                    .addGroup(panelDadosLayout.createSequentialGroup()
                         .addComponent(lblMatricula)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -132,11 +125,21 @@ public class Aluno extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtAno, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelDadosLayout.createSequentialGroup()
-                        .addComponent(lblPCD)
+                        .addComponent(lblNome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rdBtnSim)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rdBtnNao)
+                        .addComponent(txtNome))
+                    .addGroup(panelDadosLayout.createSequentialGroup()
+                        .addGroup(panelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelDadosLayout.createSequentialGroup()
+                                .addComponent(lblNomeTurma)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelDadosLayout.createSequentialGroup()
+                                .addComponent(lblPCD)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rdBtSim)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rdBtNao)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -153,12 +156,16 @@ public class Aluno extends javax.swing.JInternalFrame {
                 .addGroup(panelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNomeTurma)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPCD)
-                    .addComponent(rdBtnSim)
-                    .addComponent(rdBtnNao))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(rdBtSim)
+                    .addComponent(rdBtNao))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelTabela.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -181,7 +188,7 @@ public class Aluno extends javax.swing.JInternalFrame {
         );
         panelTabelaLayout.setVerticalGroup(
             panelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+            .addComponent(scrollPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,8 +209,6 @@ public class Aluno extends javax.swing.JInternalFrame {
                 .addComponent(panelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        bindingGroup.bind();
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -214,20 +219,21 @@ public class Aluno extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnRemover;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel lblAno;
     private javax.swing.JLabel lblMatricula;
     private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblNomeTurma;
     private javax.swing.JLabel lblPCD;
     private javax.swing.JPanel panelDados;
     private javax.swing.JPanel panelMenu;
     private javax.swing.JPanel panelTabela;
-    private javax.swing.JRadioButton rdBtnNao;
-    private javax.swing.JRadioButton rdBtnSim;
+    private javax.swing.JRadioButton rdBtNao;
+    private javax.swing.JRadioButton rdBtSim;
     private javax.swing.JScrollPane scrollPanel;
     private javax.swing.JTable tabelaTurma;
     private javax.swing.JTextField txtAno;
     private javax.swing.JTextField txtMatricula;
     private javax.swing.JTextField txtNome;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
