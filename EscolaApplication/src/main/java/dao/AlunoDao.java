@@ -5,7 +5,7 @@
  */
 package dao;
 
-import conexao.Connection;
+import conexao.Conexao;
 import dominio.Aluno;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -16,61 +16,63 @@ import javax.persistence.Query;
  * @author juan
  */
 public class AlunoDao {
-    public void matricularAluno(Aluno a){//deve informar a turma
-        EntityManager em = Connection.getEntityManager();
+    
+    public void salvarAtualizarAluno(Aluno aluno) { //deve informar a turma
+        EntityManager em = Conexao.getEntityManager();
         em.getTransaction().begin();
-        if(a.getMatricula()!=null){
-         a = em.merge(a);
-         }
-     em.persist(a);
-     em.getTransaction().commit();
-     em.close();
+        if(aluno.getMatricula()!= null){
+            aluno = em.merge(aluno);
+        }
+        em.persist(aluno);
+        em.getTransaction().commit();
+        em.close();
     }
     
-    public List<Aluno> buscarAluno(Aluno a){
-        EntityManager em = Connection.getEntityManager();
+    public void excluirAluno(Aluno aluno) {
+        EntityManager em = Conexao.getEntityManager();
+        em.getTransaction().begin();
+        aluno = em.merge(aluno);
+        em.remove(aluno);
+        em.getTransaction().commit();
+        em.close();
+    }
+    
+    public List<Aluno> buscarAluno(Aluno aluno){
+        EntityManager em = Conexao.getEntityManager();
         StringBuilder sql = new StringBuilder("FROM Aluno a WHERE 1 = 1");
-        if(a.getMatricula() != null){
+        if(aluno.getMatricula() != null){
             sql.append("and a.matricula = :matricula");
         }
-        if(a.getNome() != null && a.getNome().equals("")){
+        if(aluno.getNome() != null && aluno.getNome().equals("")){
             sql.append("and a.nome like :alu_nome");
         }
-        if(a.getAnoNasc()!= null){
-            sql.append("and a.AnoNasc = :alu_AnoNasc");
+        if(aluno.getAnoNasc()!= null){
+            sql.append("and a.anoNasc = :alu_AnoNasc");
         }
-        if(a.getPCD()== true || a.getPCD() == false){
+        if(aluno.getPCD()== true || aluno.getPCD() == false){
             sql.append("and a.nome like :alu_nome");
         }
-        if(a.getTur_id()!= null){
+        if(aluno.getTur_id()!= null){
             sql.append("and a.tur_id = :tur_id");
         }
         Query query = em.createQuery(sql.toString());
         
-        if(a.getMatricula()!= null){
-            query.setParameter("matricula", a.getMatricula());
+        if(aluno.getMatricula()!= null){
+            query.setParameter("matricula", aluno.getMatricula());
         }
-        if(a.getNome() != null && a.getNome().equals("")){
-            query.setParameter("alu_nome", "%" + a.getNome() + "%");
+        if(aluno.getNome() != null && aluno.getNome().equals("")){
+            query.setParameter("alu_nome", "%" + aluno.getNome() + "%");
         }
-        if(a.getAnoNasc()!= null){
-            query.setParameter("alu_anoNasc", a.getAnoNasc());
+        if(aluno.getAnoNasc()!= null){
+            query.setParameter("alu_anoNasc", aluno.getAnoNasc());
         }
-        if(a.getPCD()== true || a.getPCD() == false){
-            query.setParameter("alu_PCD", a.getPCD());
+        if(aluno.getPCD()== true || aluno.getPCD() == false){
+            query.setParameter("alu_PCD", aluno.getPCD());
         }
-        if(a.getTur_id()!= null){
-            query.setParameter("tur_id", a.getTur_id());
+        if(aluno.getTur_id()!= null){
+            query.setParameter("tur_id", aluno.getTur_id());
         }
         return query.getResultList();
     }
-    
-    public void removerAluno(Aluno a){
-        EntityManager em = Connection.getEntityManager();
-        em.getTransaction().begin();
-        a = em.merge(a);
-        em.remove(a);
-        em.getTransaction().commit();
-        em.close();
-    }
+
 }

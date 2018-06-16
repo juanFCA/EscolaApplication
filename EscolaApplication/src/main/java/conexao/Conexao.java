@@ -13,17 +13,17 @@ import javax.persistence.Persistence;
  *
  * @author juan
  */
-public class Connection {
+public class Conexao {
     
     public static EntityManagerFactory emf;
-    private static Connection conexao;
+    private static Conexao conexao;
     
-    public Connection(){
+    public Conexao(){
         emf = Persistence.createEntityManagerFactory("ESCOLAPU");
     }
     public synchronized static EntityManager getEntityManager(){
         if (conexao == null){
-            conexao = new Connection();
+            conexao = new Conexao();
         }
         return emf.createEntityManager();
     }

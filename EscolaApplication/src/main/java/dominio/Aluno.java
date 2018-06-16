@@ -5,12 +5,14 @@
  */
 package dominio;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import util.ValidacaoException;
 
 /**
  *
@@ -19,7 +21,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table (name="aluno")
-public class Aluno {
+public class Aluno implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)//Postgresql auto increment
@@ -109,11 +111,15 @@ public class Aluno {
     public void setTur_id(Long tur_id) {
         this.tur_id = tur_id;
     }
-    
+
     @Override
     public String toString() {
-        return "Aluno{" + "matricula=" + matricula + ", nome=" + nome + ", anoNasc=" + anoNasc + ", PCD=" + PCD + '}';
+        return "Aluno{" + "matricula=" + matricula + ", nome=" + nome + ", anoNasc=" + anoNasc + ", PCD=" + PCD + ", tur_id=" + tur_id + '}';
     }
 
-    
+    public void validar() throws ValidacaoException{
+        if (this.nome == null || this.nome.equals("")) {
+            throw new ValidacaoException("Campo nome precisa ser preenchido");
+        }
+    }
 }

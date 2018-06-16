@@ -29,6 +29,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        desktopPane = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnArquivo = new javax.swing.JMenu();
         mniSair = new javax.swing.JMenuItem();
@@ -40,6 +41,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         mniRelAlu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Escola DJJL");
 
         mnArquivo.setText("Arquivo");
 
@@ -56,6 +58,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         mnTurma.setText("Turma");
 
         mniCadasTur.setText("Cadastro");
+        mniCadasTur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniCadasTurActionPerformed(evt);
+            }
+        });
         mnTurma.add(mniCadasTur);
 
         mniRelTur.setText("Relatorio");
@@ -66,6 +73,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         mnAluno.setText("Aluno");
 
         mniCadasAlu.setText("Cadastro");
+        mniCadasAlu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniCadasAluActionPerformed(evt);
+            }
+        });
         mnAluno.add(mniCadasAlu);
 
         mniRelAlu.setText("Relatorio");
@@ -79,11 +91,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
         );
 
         pack();
@@ -93,6 +105,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_mniSairActionPerformed
+
+    private void mniCadasTurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniCadasTurActionPerformed
+        // TODO add your handling code here:
+        Turma turma = new Turma();
+        this.desktopPane.add(turma);
+        turma.setVisible(true);
+    }//GEN-LAST:event_mniCadasTurActionPerformed
+
+    private void mniCadasAluActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniCadasAluActionPerformed
+        // TODO add your handling code here:
+        Aluno aluno = new Aluno();
+        this.desktopPane.add(aluno);
+        aluno.setVisible(true);
+    }//GEN-LAST:event_mniCadasAluActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,6 +156,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu mnAluno;
     private javax.swing.JMenu mnArquivo;
