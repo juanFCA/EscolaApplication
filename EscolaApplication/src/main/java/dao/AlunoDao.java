@@ -49,8 +49,8 @@ public class AlunoDao {
         if(aluno.getAnoNasc()!= null){
             sql.append("and a.anoNasc = :alu_AnoNasc");
         }
-        if(aluno.getPCD()== true || aluno.getPCD() == false){
-            sql.append("and a.nome like :alu_nome");
+        if(aluno.getPCD() == 0 || aluno.getPCD() == 1){
+            sql.append("and a.PCD like :alu_PCD");
         }
         if(aluno.getTur_id()!= null){
             sql.append("and a.tur_id = :tur_id");
@@ -66,7 +66,7 @@ public class AlunoDao {
         if(aluno.getAnoNasc()!= null){
             query.setParameter("alu_anoNasc", aluno.getAnoNasc());
         }
-        if(aluno.getPCD()== true || aluno.getPCD() == false){
+        if(aluno.getPCD()== 0 || aluno.getPCD() == 1){
             query.setParameter("alu_PCD", aluno.getPCD());
         }
         if(aluno.getTur_id()!= null){

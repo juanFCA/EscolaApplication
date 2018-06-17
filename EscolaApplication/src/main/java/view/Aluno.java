@@ -71,6 +71,7 @@ public class Aluno extends javax.swing.JInternalFrame {
         tabelaAluno = new javax.swing.JTable();
 
         setClosable(true);
+        setTitle("Cadastro de Alunos");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameOpened(evt);

@@ -40,7 +40,7 @@ public class Aluno implements Serializable {
     private Long anoNasc;
     
     @Column(name="alu_PCD", nullable=false)
-    private boolean PCD;
+    private int PCD;
     
     @Column(name="tur_id")
     private Long tur_id;
@@ -99,15 +99,15 @@ public class Aluno implements Serializable {
     /**
      * @return the PCD
      */
-    public boolean getPCD() {
+    public int getPCD() {
         return PCD;
     }
 
     /**
      * @param PCD the PCD to set
      */
-    public void setPCD(boolean PCD) {
-        boolean oldPCD = this.PCD;
+    public void setPCD(int PCD) {
+        int oldPCD = this.PCD;
         this.PCD = PCD;
         changeSupport.firePropertyChange("PCD", oldPCD, PCD);
     }

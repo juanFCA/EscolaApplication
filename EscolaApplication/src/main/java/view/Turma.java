@@ -17,7 +17,7 @@ import util.ValidacaoException;
  */
 public class Turma extends javax.swing.JInternalFrame {
 
-    private TurmaControler turmaControler;
+    private final TurmaControler turmaControler;
     
     /**
      * Creates new form Turma
@@ -62,6 +62,7 @@ public class Turma extends javax.swing.JInternalFrame {
         tabelaTurma = new javax.swing.JTable();
 
         setClosable(true);
+        setTitle("Cadastro de Turmas");
 
         panelMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
