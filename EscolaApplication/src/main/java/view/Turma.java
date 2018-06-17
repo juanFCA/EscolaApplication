@@ -6,6 +6,7 @@
 package view;
 
 import controler.TurmaControler;
+import java.awt.Dimension;
 import javassist.tools.rmi.RemoteException;
 import javax.swing.JOptionPane;
 import util.ValidacaoException;
@@ -59,6 +60,8 @@ public class Turma extends javax.swing.JInternalFrame {
         panelTabela = new javax.swing.JPanel();
         scrollPanel = new javax.swing.JScrollPane();
         tabelaTurma = new javax.swing.JTable();
+
+        setClosable(true);
 
         panelMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -292,10 +295,11 @@ public class Turma extends javax.swing.JInternalFrame {
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
         // TODO add your handling code here:
-         if (JOptionPane.showConfirmDialog(this, 
+        if (JOptionPane.showConfirmDialog(this, 
                 "Deseja realmente excluir esta Turma?",
                 "Excluir Turma",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            
             try {
                 turmaControler.excluir();
                 JOptionPane.showMessageDialog(this, 
@@ -346,4 +350,9 @@ public class Turma extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtTotAlunos;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
+    public void setPosicao() {
+        Dimension d = this.getDesktopPane().getSize();
+        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
+    }
 }

@@ -5,6 +5,8 @@
  */
 package dominio;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import util.ValidacaoException;
 
 /**
@@ -22,6 +25,9 @@ import util.ValidacaoException;
 @Entity
 @Table (name="aluno")
 public class Aluno implements Serializable {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)//Postgresql auto increment
@@ -53,7 +59,9 @@ public class Aluno implements Serializable {
      * @param matricula the matricula to set
      */
     public void setMatricula(Long matricula) {
+        Long oldMatricula = this.matricula;
         this.matricula = matricula;
+        changeSupport.firePropertyChange("matricula", oldMatricula, matricula);
     }
 
     /**
@@ -67,7 +75,9 @@ public class Aluno implements Serializable {
      * @param nome the nome to set
      */
     public void setNome(String nome) {
+        String oldNome = this.nome;
         this.nome = nome;
+        changeSupport.firePropertyChange("nome", oldNome, nome);
     }
 
     /**
@@ -81,7 +91,9 @@ public class Aluno implements Serializable {
      * @param anoNasc the anoNasc to set
      */
     public void setAnoNasc(Long anoNasc) {
+        Long oldAnoNasc = this.anoNasc;
         this.anoNasc = anoNasc;
+        changeSupport.firePropertyChange("anoNasc", oldAnoNasc, anoNasc);
     }
 
     /**
@@ -95,7 +107,9 @@ public class Aluno implements Serializable {
      * @param PCD the PCD to set
      */
     public void setPCD(boolean PCD) {
+        boolean oldPCD = this.PCD;
         this.PCD = PCD;
+        changeSupport.firePropertyChange("PCD", oldPCD, PCD);
     }
     
     /**
@@ -109,7 +123,9 @@ public class Aluno implements Serializable {
      * @param tur_id the tur_id to set
      */
     public void setTur_id(Long tur_id) {
+        Long oldTur_id = this.tur_id;
         this.tur_id = tur_id;
+        changeSupport.firePropertyChange("tur_id", oldTur_id, tur_id);
     }
 
     @Override
@@ -121,5 +137,13 @@ public class Aluno implements Serializable {
         if (this.nome == null || this.nome.equals("")) {
             throw new ValidacaoException("Campo nome precisa ser preenchido");
         }
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
 }

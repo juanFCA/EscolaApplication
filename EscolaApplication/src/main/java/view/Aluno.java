@@ -5,17 +5,34 @@
  */
 package view;
 
+import controler.AlunoControler;
+import controler.TurmaControler;
+import dao.TurmaDao;
+import java.awt.Dimension;
+import java.util.List;
+import javassist.tools.rmi.RemoteException;
+import javax.swing.JOptionPane;
+import util.ValidacaoException;
+
 /**
  *
  * @author juan
  */
 public class Aluno extends javax.swing.JInternalFrame {
 
+    private AlunoControler alunoControler;
+    private TurmaControler turmaControler;
+    
     /**
      * Creates new form Aluno
      */
     public Aluno() {
+        alunoControler = new AlunoControler();
         initComponents();
+    }
+    
+    public AlunoControler getAlunoControler() {
+        return alunoControler;
     }
 
     /**
@@ -26,8 +43,12 @@ public class Aluno extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         btGroupPCD = new javax.swing.ButtonGroup();
+        ESCOLAPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("ESCOLAPU").createEntityManager();
+        alunoQuery = java.beans.Beans.isDesignTime() ? null : ESCOLAPUEntityManager.createQuery("SELECT a FROM Aluno a");
+        alunoList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : alunoQuery.getResultList();
         panelMenu = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
@@ -41,23 +62,62 @@ public class Aluno extends javax.swing.JInternalFrame {
         txtNome = new javax.swing.JTextField();
         lblNomeTurma = new javax.swing.JLabel();
         txtMatricula = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cBoxNomeTurma = new javax.swing.JComboBox<>();
         lblPCD = new javax.swing.JLabel();
         rdBtSim = new javax.swing.JRadioButton();
         rdBtNao = new javax.swing.JRadioButton();
         panelTabela = new javax.swing.JPanel();
         scrollPanel = new javax.swing.JScrollPane();
-        tabelaTurma = new javax.swing.JTable();
+        tabelaAluno = new javax.swing.JTable();
+
+        setClosable(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         panelMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnSalvar.setText("Salvar/Atualizar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         btnPesquisar.setLabel("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
@@ -94,11 +154,23 @@ public class Aluno extends javax.swing.JInternalFrame {
 
         lblAno.setText("Ano de Nascimento:");
 
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${alunoControler.alunoDigitado.anoNasc}"), txtAno, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${alunoControler.alunoDigitado.nome}"), txtNome, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         lblNomeTurma.setText("Nome da Turma:");
 
         txtMatricula.setEditable(false);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${alunoControler.alunoDigitado.matricula}"), txtMatricula, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        cBoxNomeTurma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${alunoControler.alunoDigitado.tur_id}"), cBoxNomeTurma, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
 
         lblPCD.setText("PCD:");
         lblPCD.setToolTipText("");
@@ -106,8 +178,14 @@ public class Aluno extends javax.swing.JInternalFrame {
         btGroupPCD.add(rdBtSim);
         rdBtSim.setText("Sim");
 
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${alunoControler.alunoDigitado.PCD}"), rdBtSim, org.jdesktop.beansbinding.BeanProperty.create("selected"));
+        bindingGroup.addBinding(binding);
+
         btGroupPCD.add(rdBtNao);
         rdBtNao.setText("Não");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${alunoControler.alunoDigitado.PCD}"), rdBtNao, org.jdesktop.beansbinding.BeanProperty.create("selected"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout panelDadosLayout = new javax.swing.GroupLayout(panelDados);
         panelDados.setLayout(panelDadosLayout);
@@ -133,7 +211,7 @@ public class Aluno extends javax.swing.JInternalFrame {
                             .addGroup(panelDadosLayout.createSequentialGroup()
                                 .addComponent(lblNomeTurma)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cBoxNomeTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelDadosLayout.createSequentialGroup()
                                 .addComponent(lblPCD)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -159,7 +237,7 @@ public class Aluno extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNomeTurma)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cBoxNomeTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPCD)
@@ -170,7 +248,7 @@ public class Aluno extends javax.swing.JInternalFrame {
 
         panelTabela.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        tabelaTurma.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaAluno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -178,7 +256,30 @@ public class Aluno extends javax.swing.JInternalFrame {
 
             }
         ));
-        scrollPanel.setViewportView(tabelaTurma);
+        tabelaAluno.getTableHeader().setReorderingAllowed(false);
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${alunoControler.alunosTabelas}");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tabelaAluno);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${PCD}"));
+        columnBinding.setColumnName("PCD");
+        columnBinding.setColumnClass(Boolean.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${anoNasc}"));
+        columnBinding.setColumnName("Ano Nasc");
+        columnBinding.setColumnClass(Long.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${matricula}"));
+        columnBinding.setColumnName("Matricula");
+        columnBinding.setColumnClass(Long.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nome}"));
+        columnBinding.setColumnName("Nome");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tur_id}"));
+        columnBinding.setColumnName("Tur_id");
+        columnBinding.setColumnClass(Long.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${alunoControler.alunoSelecionado}"), tabelaAluno, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        bindingGroup.addBinding(binding);
+
+        scrollPanel.setViewportView(tabelaAluno);
 
         javax.swing.GroupLayout panelTabelaLayout = new javax.swing.GroupLayout(panelTabela);
         panelTabela.setLayout(panelTabelaLayout);
@@ -209,17 +310,98 @@ public class Aluno extends javax.swing.JInternalFrame {
                 .addComponent(panelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        // TODO add your handling code here:
+        alunoControler.novo();
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        // TODO add your handling code here:
+        try {
+            alunoControler.salvar();
+            JOptionPane.showMessageDialog(this, 
+                "Aluno salvo com sucesso",
+                "Salvar Aluno",
+                JOptionPane.INFORMATION_MESSAGE);              
+        } catch(ValidacaoException e) {
+            JOptionPane.showMessageDialog(this, 
+                e.getMessage(),
+                "Falha de Validação",
+                JOptionPane.WARNING_MESSAGE);              
+        } catch(RemoteException e ){
+            JOptionPane.showMessageDialog(this,
+                    "Erro "+e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        } 
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        // TODO add your handling code here:
+        if (JOptionPane.showConfirmDialog(this, 
+                "Deseja realmente excluir este Aluno?",
+                "Excluir Aluno",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            
+            try {
+                alunoControler.excluir();
+                JOptionPane.showMessageDialog(this, 
+                    "Aluno excluídp com sucesso",
+                    "Excluir Aluno",
+                    JOptionPane.INFORMATION_MESSAGE);              
+            } catch(RemoteException e ){
+                JOptionPane.showMessageDialog(this,
+                    "Erro "+e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            }        
+        }
+    }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        // TODO add your handling code here:
+        try {
+            alunoControler.pesquisar();
+        } catch(RemoteException e ){
+            JOptionPane.showMessageDialog(this,
+                    "Erro "+e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        // TODO add your handling code here:
+        cBoxNomeTurma.addItem("Selecione uma Turma");
+        try {
+            turmaControler = new TurmaControler();
+            List<dominio.Turma> lista = turmaControler.getTurmasTabelas();
+            
+            lista.forEach((tur) -> {
+                cBoxNomeTurma.addItem(tur.getNome());
+            });
+            
+        } catch(Exception erro) {
+            System.out.println(erro);
+        }
+    }//GEN-LAST:event_formInternalFrameOpened
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.persistence.EntityManager ESCOLAPUEntityManager;
+    private java.util.List<dominio.Aluno> alunoList;
+    private javax.persistence.Query alunoQuery;
     private javax.swing.ButtonGroup btGroupPCD;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnRemover;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cBoxNomeTurma;
     private javax.swing.JLabel lblAno;
     private javax.swing.JLabel lblMatricula;
     private javax.swing.JLabel lblNome;
@@ -231,9 +413,15 @@ public class Aluno extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rdBtNao;
     private javax.swing.JRadioButton rdBtSim;
     private javax.swing.JScrollPane scrollPanel;
-    private javax.swing.JTable tabelaTurma;
+    private javax.swing.JTable tabelaAluno;
     private javax.swing.JTextField txtAno;
     private javax.swing.JTextField txtMatricula;
     private javax.swing.JTextField txtNome;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
+    public void setPosicao() {
+        Dimension d = this.getDesktopPane().getSize();
+        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
+    }
 }

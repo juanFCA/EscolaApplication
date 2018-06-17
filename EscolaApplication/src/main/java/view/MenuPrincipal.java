@@ -111,6 +111,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Turma turma = new Turma();
         this.desktopPane.add(turma);
         turma.setVisible(true);
+        turma.setPosicao();
     }//GEN-LAST:event_mniCadasTurActionPerformed
 
     private void mniCadasAluActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniCadasAluActionPerformed
@@ -118,6 +119,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Aluno aluno = new Aluno();
         this.desktopPane.add(aluno);
         aluno.setVisible(true);
+        aluno.setPosicao();
     }//GEN-LAST:event_mniCadasAluActionPerformed
 
     /**
