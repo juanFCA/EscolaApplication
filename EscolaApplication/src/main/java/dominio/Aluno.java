@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import org.hibernate.annotations.Type;
 import util.ValidacaoException;
 
 /**
@@ -31,6 +32,7 @@ public class Aluno implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)//Postgresql auto increment
+    @Column(name = "alu_matricula", updatable = false, nullable = false)
     private Long matricula;
     
     @Column(name="alu_nome", length= 255, nullable=false)
@@ -39,10 +41,10 @@ public class Aluno implements Serializable {
     @Column(name="alu_anoNasc", nullable=false)
     private Long anoNasc;
     
-    @Column(name="alu_PCD", nullable=false)
+    @Column(name="alu_PCD", nullable = false)
     private int PCD;
     
-    @Column(name="tur_id")
+    @Column(name="alu_tur_id")
     private Long tur_id;
 
     public Aluno() {
